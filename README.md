@@ -13,21 +13,34 @@ In this project, we build a model to predict how likely a customer will churn by
 The objective is to obtain a data-driven solution that will allow us to reduce churn rates and, as a consequence, to increase customer satisfaction and corporation revenue.
 
 ## Data set
-The data set used in this project is available on Kaggle and contains nineteen columns (independent variables) that indicate the of the clients of a fictional telecommunications corporation. The Churn column (response variable) indicates whether the customer departed within the last month or not. The class No includes the clients that did not leave the company last month, while the class Yes contains the clients that decided to terminate their relations with the company. The objective of the analysis is to obtain the relation between the customer’s characteristics and the churn.
+The dataset used in this project is from a fictional telecommunications company and is focused on understanding the relationship between customer characteristics and churn. Here's a summary of the dataset based on the provided information:
 
-The data set contains 19 independent variables, which can be classified into 3 groups:
+### Demographic Information:
+1. **gender:** Indicates whether the client is female or male (Female, Male).
+2. **SeniorCitizen:** Indicates whether the client is a senior citizen or not (0, 1).
+3. **Partner:** Indicates whether the client has a partner or not (Yes, No).
+4. **Dependents:** Indicates whether the client has dependents or not (Yes, No).
 
-(1) Demographic Information
+### Customer Account Information:
+5. **tenure:** Number of months the customer has stayed with the company (Multiple different numeric values).
+6. **Contract:** Indicates the customer’s current contract type (Month-to-Month, One year, Two years).
+7. **PaperlessBilling:** Indicates whether the client has paperless billing or not (Yes, No).
+8. **PaymentMethod:** The customer’s payment method (Electronic check, Mailed check, Bank transfer (automatic), Credit Card (automatic)).
+9. **MonthlyCharges:** The amount charged to the customer monthly (Multiple different numeric values).
+10. **TotalCharges:** The total amount charged to the customer (Multiple different numeric values).
 
-gender: Whether the client is a female or a male (Female, Male). SeniorCitizen: Whether the client is a senior citizen or not ( 0, 1). Partner: Whether the client has a partner or not (Yes, No). Dependents: Whether the client has dependents or not (Yes, No).
+### Services Information:
+11. **PhoneService:** Indicates whether the client has a phone service or not (Yes, No).
+12. **MultipleLines:** Indicates whether the client has multiple lines or not (No phone service, No, Yes).
+13. **InternetService:** Indicates whether the client is subscribed to Internet service with the company (DSL, Fiber optic, No).
+14. **OnlineSecurity:** Indicates whether the client has online security or not (No internet service, No, Yes).
+15. **OnlineBackup:** Indicates whether the client has online backup or not (No internet service, No, Yes).
+16. **DeviceProtection:** Indicates whether the client has device protection or not (No internet service, No, Yes).
+17. **TechSupport:** Indicates whether the client has tech support or not (No internet service, No, Yes).
+18. **StreamingTV:** Indicates whether the client has streaming TV or not (No internet service, No, Yes).
+19. **StreamingMovies:** Indicates whether the client has streaming movies or not (No internet service, No, Yes).
 
-(2) Customer Account Information
-
-tenure: Number of months the customer has stayed with the company (Multiple different numeric values). Contract: Indicates the customer’s current contract type (Month-to-Month, One year, Two year). PaperlessBilling: Whether the client has paperless billing or not (Yes, No). PaymentMethod: The customer’s payment method (Electronic check, Mailed check, Bank transfer (automatic), Credit Card (automatic)). MontlyCharges: The amount charged to the customer monthly (Multiple different numeric values). TotalCharges: The total amount charged to the customer (Multiple different numeric values).
-
-(3) Services Information
-
-PhoneService: Whether the client has a phone service or not (Yes, No). MultipleLines: Whether the client has multiple lines or not (No phone service, No, Yes). InternetServices: Whether the client is subscribed to Internet service with the company (DSL, Fiber optic, No) OnlineSecurity: Whether the client has online security or not (No internet service, No, Yes). OnlineBackup: Whether the client has online backup or not (No internet service, No, Yes). DeviceProtection: Whether the client has device protection or not (No internet service, No, Yes). TechSupport: Whether the client has tech support or not (No internet service, No, Yes). StreamingTV: Whether the client has streaming TV or not (No internet service, No, Yes). StreamingMovies: Whether the client has streaming movies or not (No internet service, No, Yes).
+The target variable is the **Churn** column, which indicates whether the customer departed within the last month or not (Yes, No). The analysis aims to explore how these demographic, account, and services features are related to customer churn. This dataset can be used to build predictive models to identify factors influencing churn and develop strategies for customer retention.
 
 ## Exploratory Data Analysis and Data Cleaning
 Exploratory data analysis consists of analyzing the main characteristics of a data set usually by means of visualization methods and summary statistics. The objective is to understand the data, discover patterns and anomalies, and check assumptions before performing further evaluations.
