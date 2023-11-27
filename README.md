@@ -85,44 +85,28 @@ min_samples_split: the minimum number of samples required to split an internal n
 The next step consists of finding the combination of hyperparameters that leads to the best classification of our data. This process is called hyperparameter tuning.
 
 ## Hyperparameter tuning
-Thus far we have split our data into a training set for learning the parameters of the model, and a testing set for evaluating its performance. The next step in the machine learning process is to perform hyperparameter tuning. The selection of hyperparameters consists of testing the performance of the model against different combinations of hyperparameters, selecting those that perform best according to a chosen metric and a validation method.
+The process of hyperparameter tuning is crucial in machine learning for optimizing model performance. It involves testing various combinations of hyperparameters, selecting the best-performing ones based on a chosen metric and validation method. The common practice is to use k-fold cross-validation, splitting the training data into multiple samples for testing and training.
 
-For hyperparameter tuning, we need to split our training data again into a set for training and a set for testing the hyperparameters (often called validation set). It is a very common practice to use k-fold cross-validation for hyperparameter tuning. The training set is divided again into k equal-sized samples, 1 sample is used for testing and the remaining k-1 samples are used for training the model, repeating the process k times. Then, the k evaluation metrics (in this case the accuracy) are averaged to produce a single estimator.
+There are different techniques for hyperparameter tuning:
 
-It is important to stress that the validation set is used for hyperparameter selection and not for evaluating the final performance of our model, as shown in the image below.
+1. **Grid Search:** Tests all combinations in a predefined grid, but can be computationally expensive.
 
-There are multiple techniques to find the best hyperparameters for a model. The most popular methods are (1) grid search, (2) random search, and (3) bayesian optimization. Grid search test all combinations of hyperparameters and select the best performing one. It is a really time-consuming method, particularly when the number of hyperparameters and values to try are really high.
+2. **Random Search:** Randomly samples combinations from a specified grid, providing computational efficiency but may not evenly cover the entire grid.
 
-In random search, you specify a grid of hyperparameters, and random combinations are selected where each combination of hyperparameters has an equal chance of being sampled. We do not analyze all combinations of hyperparameters, but only random samples of those combinations. This approach is much more computationally efficient than trying all combinations; however, it also has some disadvantages. The main drawback of random search is that not all areas of the grid are evenly covered, especially when the number of combinations selected from the grid is low.
+3. **Bayesian Optimization:** An advanced technique that intelligently selects hyperparameters based on past evaluations.
 
-We can implement random search in Scikit-learn using the RandomSearchCV class from the sklearn.model_selection package.
+In scikit-learn, random search can be implemented using the `RandomizedSearchCV` class. This involves specifying a grid of hyperparameter values as a dictionary and randomly sampling combinations from this grid. The `n_iter` parameter determines the number of combinations to sample.
 
-First of all, we specify the grid of hyperparameter values using a dictionary (grid_parameters) where the keys represent the hyperparameters and the values are the set of options we want to evaluate. Then, we define the RandomizedSearchCV object for trying different random combinations from this grid. The number of hyperparameter combinations that are sampled is defined in the n_iter parameter. Naturally, increasing n_iter will lead in most cases to more accurate results, since more combinations are sampled; however, on many occasions, the improvement in performance won’t be significant.
-
-After fitting the grid object, we can obtain the best hyperparameters using best_params_attribute. As you can above, the best hyperparameters are: {‘n_estimators’: 90, ‘min_samples_split’: 3, ‘max_features’: ‘log2’, ‘max_depth’: 3}.
+After fitting the `RandomizedSearchCV` object, the best hyperparameters can be obtained using the `best_params_` attribute. This information is essential for optimizing the model's performance without exhaustively testing all possible combinations. In a provided example, the best hyperparameters were {‘n_estimators’: 90, ‘min_samples_split’: 3, ‘max_features’: ‘log2’, ‘max_depth’: 3}, indicating the optimal settings for a specific model.
 
 ## Performace of the model
-The last step of the machine learning process is to check the performance of the model (best hyperparameters ) by using the confusion matrix and some evaluation metrics.
+In the final phase of the machine learning process, the model's performance is evaluated using the best hyperparameters through the confusion matrix and various evaluation metrics. The confusion matrix provides a detailed breakdown of correct and incorrect classifications, distinguishing between true positives, true negatives, false positives, and false negatives.
 
-Confusion matrix The confusion matrix, also known as the error matrix, is used to evaluate the performance of a machine learning model by examining the number of observations that are correctly and incorrectly classified. Each column of the matrix contains the predicted classes while each row represents the actual classes or vice versa. In a perfect classification, the confusion matrix will be all zeros except for the diagonal. All the elements out of the main diagonal represent misclassifications. It is important to bear in mind that the confusion matrix allows us to observe patterns of misclassification (which classes and to which extend they were incorrectly classified).
+Key evaluation metrics derived from the confusion matrix include accuracy, sensitivity (recall), specificity, and precision. Accuracy represents overall correct predictions, sensitivity measures the ability to correctly identify positive instances, specificity gauges the accuracy in identifying negative instances, and precision assesses the accuracy of positive predictions.
 
-In binary classification problems, the confusion matrix is a 2-by-2 matrix composed of 4 elements:
+Scikit-Learn's `classification_report` function streamlines the presentation of these metrics, providing a comprehensive summary for each class. The analysis of sensitivity and specificity, in this example, reveals insights into the model's ability to predict positive and negative instances.
 
-TP (True Positive): number of patients with spine problems that are correctly classified as sick. TN (True Negative): number of patients without pathologies who are correctly classified as healthy. FP (False Positive): number of healthy patients that are wrongly classified as sick. FN (False Negative): number of patients with spine diseases that are misclassified as healthy.
-
-Now that the model is trained, it is time to evaluate its performance using the testing set. First, we use the previous model (gradient boosting classifier with best hyperparameters) to predict the class labels of the testing data (with the predict method). Then, we construct the confusion matrix using the confusion_matrix function from the sklearn.metrics package to check which observations were properly classified. The output is a NumPy array where the rows represent the true values and the columns the predicted classes.
-
-As shown above, 1402 observations of the testing data were correctly classified by the model (1154 true negatives and 248 true positives). On the contrary, we can observe 356 misclassifications (156 false positives and 200 false negatives).
-
-Evaluation metrics Evaluating the quality of the model is a fundamental part of the machine learning process. The most used performance evaluation metrics are calculated based on the elements of the confusion matrix.
-
-Accuracy: It represents the proportion of predictions that were correctly classified. Accuracy is the most commonly used evaluation metric; however, it is important to bear in mind that accuracy can be misleading when working with imbalanced datasets. Sensitivity: It represents the proportion of positive samples (diseased patients) that are identified as such. Specificity: It represents the proportion of negative samples (healthy patients) that are identified as such. Precision: It represents the proportion of positive predictions that are actually correct.
-
-We can calculate the evaluation metrics manually using the numbers of the confusion matrix. Alternatively, Scikit-learn has already implemented the function classification_report that provides a summary of the key evaluation metrics. The classification report contains the precision, sensitivity, f1-score, and support (number of samples) achieved for each class.
-
-As shown above, we obtain a sensitivity of 0.55 (248/(200+248)) and a specificity of 0.88 (1154/(1154+156)). The model obtained predicts more accurately customers that do not churn. This should not surprise us at all, since gradient boosting classifiers are usually biased toward the classes with more observations.
-
-As you may have noticed, the previous summary does not contain the accuracy of the classification. However, this can be easily calculated using the function accuracy_score from the metrics module.
+Overall, the summary emphasizes the importance of considering a range of metrics, especially in imbalanced datasets, to gain a nuanced understanding of the model's strengths and areas for improvement. The example underscores the model's bias toward accurately predicting non-churning customers, a common trait in gradient boosting classifiers.
 
 ## Drawing conclusions — Summary
 In this post, we have walked through a complete end-to-end machine learning project using the Telco customer Churn dataset. We started by cleaning the data and analyzing. Then, to be able to build a machine learning model, we transformed the categorical data into numeric variables (feature engineering). After transforming the data, we tried 6 different machine learning algorithms using default parameters. Finally, we tuned the hyperparameters of the Gradient Boosting Classifier (best performance model) for model optimization, obtaining an accuracy of nearly 80% (close to 6% higher than the baseline).
