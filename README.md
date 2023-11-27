@@ -45,7 +45,7 @@ The target variable is the **Churn** column, which indicates whether the custome
 ## Exploratory Data Analysis and Data Cleaning
 Exploratory data analysis consists of analyzing the main characteristics of a data set usually by means of visualization methods and summary statistics. The objective is to understand the data, discover patterns and anomalies, and check assumptions before performing further evaluations.
 
-Missing values and data types
+### Missing values and data types
 At the beginning of EDA, we want to know as much information as possible about the data, this is when the pandas.DataFrame.info method comes in handy. This method prints a concise summary of the data frame, including the column names and their data types, the number of non-null values, and the amount of memory used by the data frame.
 
 ## Feature Engineering
@@ -59,9 +59,9 @@ Algorithm selection is a key challenge in any machine learning project since the
 
 In this project, we compare 6 different algorithms, all of them already implemented in Scikit-Learn.
 
-Dummy classifier (baseline) K Nearest Neighbours Logistic Regression Support Vector Machines Random Forest Gradiente Boosting
+Dummy classifier (baseline) K Nearest Neighbours Logistic Regression Support Vector Machines Random Forest Gradiente Boosting.
 
-As shown below, all models outperform the dummy classifier model in terms of prediction accuracy. Therefore, we can affirm that machine learning is applicable to our problem because we observe an improvement over the baseline.
+As in this project, all models outperform the dummy classifier model in terms of prediction accuracy. Therefore, we can affirm that machine learning is applicable to our problem because we observe an improvement over the baseline.
 
 It is important to bear in mind that we have trained all the algorithms using the default hyperparameters. The accuracy of many machine learning algorithms is highly sensitive to the hyperparameters chosen for training the model. A more in-depth analysis will include an evaluation of a wider range of hyperparameters (not only default values) before choosing a model (or models) for hyperparameter tuning. Nonetheless, this is out of the scope of this article. In this example, we will only further evaluate the model that presents higher accuracy using the default hyperparameters. As shown above, this corresponds to the gradient boosting model which shows an accuracy of nearly 80%.
 
